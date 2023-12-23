@@ -1,0 +1,19 @@
+version: "3"
+
+env:
+  SCHEMAS: ./sql/schemas.sql
+  UFBA_BRONZE: ./sql/ufba_bronze_tables.sql
+  DUCKDB: ./db/ufba.duckdb
+
+tasks:
+  run_sql: 
+    vars: 
+      FILES: $SCHEMAS $UFBA_BRONZE
+    sources:
+      - ./sql/schemas.sql
+      - ./sql/ufba_bronze_tables.sql
+      - ./datalake_ufba/sql.py
+    cmds:
+      - for: { var: FILES }
+        cmd: poetry run sql -sql {{.ITEM}} -db $DUCKDB
+        

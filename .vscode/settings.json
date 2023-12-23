@@ -1,0 +1,10 @@
+{
+    "yaml.schemas": {
+        "https://taskfile.dev/schema.json": [
+            "file:///home/slopes/Projetos/data-engineering/datalake-ufba/taskfiles/bronze.taskfile.yml",
+            "file:///home/slopes/Projetos/data-engineering/datalake-ufba/taskfiles/fetch.taskfile.yml",
+            "file:///home/slopes/Projetos/data-engineering/datalake-ufba/taskfiles/poetry.taskfile.yml",
+            "file:///home/slopes/Projetos/data-engineering/datalake-ufba/taskfiles/sql.taskfile.yml"
+        ]
+    }
+}

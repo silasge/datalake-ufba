@@ -1,0 +1,15 @@
+version: "3"
+
+includes:
+  poetry: ./taskfiles/poetry.taskfile.yml
+  fetch: ./taskfiles/fetch.taskfile.yml
+  sql: ./taskfiles/sql.taskfile.yml
+  bronze: ./taskfiles/bronze.taskfile.yml
+
+tasks:
+  default:
+    cmds:
+      - task: poetry:install
+      - task: fetch:extract_files
+      - task: sql:run_sql
+      - task: bronze:import_all

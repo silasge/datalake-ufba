@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "datalake-ufba"
+version = "0.1.0"
+description = ""
+authors = ["Silas Genário <silasge.dev@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+duckdb = "^0.9.2"
+polars = {extras = ["pyarrow"], version = "^0.20.2"}
+dvc = "^3.35.0"
+dvc-gdrive = "^3.0.0"
+pandas = "^2.1.4"
+pyreadstat = "^1.2.6"
+py7zr = "^0.20.8"
+pydrive2 = "^1.18.1"
+click = "^8.1.7"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.27.1"
+pre-commit = "^3.6.0"
+
+[tool.poetry.scripts]
+download = "datalake_ufba.fetch.download:download_file_from_gdrive"
+extract = "datalake_ufba.fetch.extract:extract_7z"
+sql = "datalake_ufba.sql:execute_sql_file"
+bronze_socioeco = "datalake_ufba.bronze.socioeconomic:import_socioeconomic_to_bronze"
+bronze_academic = "datalake_ufba.bronze.academic:import_academic_to_bronze"
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

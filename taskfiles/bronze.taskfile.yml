@@ -1,0 +1,26 @@
+version: "3"
+
+env:
+  DUCKDB: ./db/ufba.duckdb
+
+tasks:
+  import_all:
+    cmds:
+      - task: import_socioeconomic
+      - task: import_academic
+
+  import_socioeconomic:
+    vars:
+      FILES:
+        sh: find -type f -path "./data/raw/socioeconomico/*.sav"
+    sources:
+      - ./datalake_ufba/bronze/socioeconomic.py
+    cmds:
+      - for: { var: FILES }
+        cmd: poetry run bronze_socioeco -se {{.ITEM}} -db $DUCKDB
+
+  import_academic:
+    sources:
+      - ./datalake_ufba/bronze/academic.py
+    cmds:
+      - poetry run bronze_academic -ac ./data/raw/academico/ufba_academica_0321.csv -db $DUCKDB
