@@ -28,6 +28,7 @@ extract = "datalake_ufba.fetch.extract:extract_7z"
 sql = "datalake_ufba.sql:execute_sql_file"
 bronze_socioeco = "datalake_ufba.bronze.socioeconomic:import_socioeconomic_to_bronze"
 bronze_academic = "datalake_ufba.bronze.academic:import_academic_to_bronze"
+bronze_sisu = "datalake_ufba.bronze.sisu:import_sisu_to_bronze"
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]

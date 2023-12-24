@@ -8,6 +8,7 @@ tasks:
     cmds:
       - task: import_socioeconomic
       - task: import_academic
+      - task: import_sisu
 
   import_socioeconomic:
     vars:
@@ -24,3 +25,14 @@ tasks:
       - ./datalake_ufba/bronze/academic.py
     cmds:
       - poetry run bronze_academic -ac ./data/raw/academico/ufba_academica_0321.csv -db $DUCKDB
+
+  import_sisu:
+    vars:
+      FILES:
+        sh: find -type f -path "./data/raw/sisu/*.csv"
+    sources:
+      - ./datalake_ufba/bronze/sisu.py
+    cmds:
+      - for: { var: FILES }
+        cmd: poetry run bronze_sisu -si {{.ITEM}} -db $DUCKDB
+        

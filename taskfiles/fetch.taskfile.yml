@@ -3,6 +3,7 @@ version: "3"
 env:
   SOCIOECO_PATH: ./data/raw/socioeconomico/socioeconomico.7z
   ACADEMICO_PATH: ./data/raw/academico/ufba_academica_0321.7z
+  SISU_PATH: ./data/raw/sisu/enem_inscritos.7z
 
 tasks:
   download_socioeco:
@@ -25,18 +26,27 @@ tasks:
     generates:
       - $ACADEMICO_PATH
 
+  download_sisu:
+    dotenv:
+      - ".env"
+    cmds:
+      - poetry run download -i $SISU_ID -p $SISU_PATH
+
   extract_files:
     vars:
-      FILES: $SOCIOECO_PATH $ACADEMICO_PATH
+      FILES: $SOCIOECO_PATH $ACADEMICO_PATH $SISU_PATH
     sources:
       - ./datalake_ufba/fetch/extract.py
-      - $SOCIOECO_PATH
-      - $ACADEMICO_PATH
+      - ./data/raw/socioeconomico/socioeconomico.7z
+      - ./data/raw/academico/ufba_academica_0321.7z
+      - ./data/raw/sisu/enem_inscritos.7z
     generates:
       - ./data/raw/academico/ufba_academica_0321.csv
       - ./data/raw/socioeconomico/*.sav
+      - ./data/raw/sisu/*.csv
     cmds:
       - task: download_socioeco
       - task: download_academico
+      - task: download_sisu
       - for: { var: FILES }
         cmd: poetry run extract -7z {{.ITEM}}
